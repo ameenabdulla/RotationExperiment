@@ -1,0 +1,59 @@
+workflows:
+  ios-rotation-experiment:
+    name: RotationExperiment iOS Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+
+    environment:
+      # ── Code Signing ──────────────────────────────────────────────────────
+      # Uses your free Apple ID. Codemagic will create a development
+      # certificate automatically when you connect your Apple account
+      # in the Codemagic dashboard (Teams → Integrations → Apple Developer).
+      ios_signing:
+        distribution_type: development
+        bundle_identifier: com.rotationexperiment.app
+
+      # ── Xcode Version ─────────────────────────────────────────────────────
+      # Xcode 14 supports Swift 5, iOS 12 target, iPhone 5s builds.
+      xcode: 14.3.1
+
+      # ── Build Variables ───────────────────────────────────────────────────
+      vars:
+        BUNDLE_ID: "com.rotationexperiment.app"
+        XCODE_PROJECT: "RotationExperiment.xcodeproj"
+        XCODE_SCHEME: "RotationExperiment"
+        XCODE_CONFIG: "Debug"
+
+    scripts:
+      # ── Step 1: Confirm Xcode version ─────────────────────────────────────
+      - name: Print Xcode version
+        script: xcodebuild -version
+
+      # ── Step 2: Apply provisioning profiles from Codemagic ─────────────────
+      - name: Set up code signing
+        script: xcode-project use-profiles
+
+      # ── Step 3: Build the IPA ──────────────────────────────────────────────
+      # Builds a development-signed IPA suitable for sideloading via
+      # AltStore or Sideloadly with a free Apple ID (7-day expiry).
+      - name: Build IPA for sideloading
+        script: |
+          xcode-project build-ipa \
+            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME" \
+            --config "$XCODE_CONFIG" \
+            --archive-flags="-destination 'generic/platform=iOS'"
+
+    # ── Artifacts: files Codemagic will let you download ────────────────────
+    artifacts:
+      - build/ios/ipa/*.ipa         # The installable app file
+      - /tmp/xcodebuild_logs/*.log  # Build logs for debugging
+
+    # ── Notify you by email when the build finishes ─────────────────────────
+    publishing:
+      email:
+        recipients:
+          - YOUR_EMAIL_HERE         # ← Replace with your email address
+        notify:
+          success: true
+          failure: true

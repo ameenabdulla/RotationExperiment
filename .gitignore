@@ -1,0 +1,54 @@
+# ── Xcode build artifacts ────────────────────────────────────────────────────
+build/
+*.xcarchive
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# ── DerivedData (Xcode's cache — very large, never commit this) ───────────────
+DerivedData/
+*.xcuserstate
+*.xcuserdata/
+xcuserdata/
+
+# ── Swift Package Manager ─────────────────────────────────────────────────────
+.build/
+Packages/
+Package.pins
+Package.resolved
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm
+
+# ── CocoaPods (not used in this project but kept for safety) ─────────────────
+Pods/
+Podfile.lock
+
+# ── Fastlane (not used but common in iOS repos) ───────────────────────────────
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# ── OS / Editor junk ─────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# ── Certificates & secrets (NEVER commit these) ───────────────────────────────
+*.p12
+*.cer
+*.mobileprovision
+*.provisionprofile
+AuthKey_*.p8
+
+# ── Temporary files ───────────────────────────────────────────────────────────
+*.log
+*.tmp
+/tmp/

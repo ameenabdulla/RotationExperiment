@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+    LaunchScreen.storyboard
+    RotationExperiment
+
+    A simple full-black launch screen that matches the app's UI theme.
+    This prevents any white flash between the OS splash and camera preview.
+-->
+<plist version="1.0">
+<dict>
+	<key>IBSandboxedEnvironment</key>
+	<true/>
+</dict>
+</plist>

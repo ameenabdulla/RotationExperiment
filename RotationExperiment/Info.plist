@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+
+    <!-- ═══════════════════════════════════════════════════════
+         App Identity
+    ═══════════════════════════════════════════════════════ -->
+    <key>CFBundleDisplayName</key>
+    <string>RotationExp</string>
+
+    <key>CFBundleName</key>
+    <string>RotationExperiment</string>
+
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+    <key>CFBundleVersion</key>
+    <string>1</string>
+
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+
+    <!-- ═══════════════════════════════════════════════════════
+         Deployment Target
+         iPhone 5s minimum: iOS 12.0
+    ═══════════════════════════════════════════════════════ -->
+    <key>MinimumOSVersion</key>
+    <string>12.0</string>
+
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+
+    <!-- ═══════════════════════════════════════════════════════
+         Supported Devices
+    ═══════════════════════════════════════════════════════ -->
+    <key>UIDeviceFamily</key>
+    <array>
+        <integer>1</integer>  <!-- iPhone only -->
+    </array>
+
+    <!-- ═══════════════════════════════════════════════════════
+         Orientation Lock
+         Lock to portrait — prevents auto-rotate while experimenting
+    ═══════════════════════════════════════════════════════ -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+    </array>
+
+    <!-- ═══════════════════════════════════════════════════════
+         Privacy Permission Strings (iOS 12+ required)
+         These appear in the system permission dialog.
+    ═══════════════════════════════════════════════════════ -->
+    <key>NSCameraUsageDescription</key>
+    <string>RotationExperiment needs the camera to record video of the rotation movement during the vibration experiment.</string>
+
+    <key>NSMicrophoneUsageDescription</key>
+    <string>RotationExperiment records audio alongside video to capture ambient sounds during the experiment. Microphone access is optional.</string>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>RotationExperiment saves recorded experiment videos to your Photos library for later analysis.</string>
+
+    <!-- ═══════════════════════════════════════════════════════
+         No Storyboard — we use AppDelegate window creation
+    ═══════════════════════════════════════════════════════ -->
+    <!-- NOTE: Delete "Main storyboard file base name" if Xcode adds it automatically -->
+
+    <!-- ═══════════════════════════════════════════════════════
+         Status Bar — hidden for full-screen camera preview
+    ═══════════════════════════════════════════════════════ -->
+    <key>UIStatusBarHidden</key>
+    <true/>
+
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+
+    <!-- ═══════════════════════════════════════════════════════
+         Launch Screen
+    ═══════════════════════════════════════════════════════ -->
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+
+    <!-- ═══════════════════════════════════════════════════════
+         Required Background Modes
+         none needed — recording stops when app backgrounds
+    ═══════════════════════════════════════════════════════ -->
+
+</dict>
+</plist>
