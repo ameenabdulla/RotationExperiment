@@ -53,7 +53,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - YOUR_EMAIL_HERE         # ← Replace with your email address
+          - ameenabdulla.2011@gmail.com
         notify:
           success: true
           failure: true
