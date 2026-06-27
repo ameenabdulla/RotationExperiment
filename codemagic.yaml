@@ -4,27 +4,39 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
-      ios_signing:
-        distribution_type: development
-        bundle_identifier: com.rotationexperiment.app
       xcode: 14.3.1
-      vars:
-        BUNDLE_ID: "com.rotationexperiment.app"
-        XCODE_PROJECT: "RotationExperiment.xcodeproj"
-        XCODE_SCHEME: "RotationExperiment"
-        XCODE_CONFIG: "Debug"
     scripts:
       - name: Print Xcode version
         script: xcodebuild -version
-      - name: Set up code signing
-        script: xcode-project use-profiles
-      - name: Build IPA for sideloading
+
+      - name: Show project info
         script: |
-          xcode-project build-ipa \
-            --project "$CM_BUILD_DIR/$XCODE_PROJECT" \
-            --scheme "$XCODE_SCHEME" \
-            --config "$XCODE_CONFIG" \
-            --archive-flags="-destination 'generic/platform=iOS'"
+          cd $CM_BUILD_DIR
+          ls -la
+          xcodebuild -list -project RotationExperiment.xcodeproj
+
+      - name: Build IPA (no signing)
+        script: |
+          cd $CM_BUILD_DIR
+          xcodebuild clean archive \
+            -project RotationExperiment.xcodeproj \
+            -scheme RotationExperiment \
+            -configuration Debug \
+            -destination "generic/platform=iOS" \
+            -archivePath build/RotationExperiment.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Export IPA
+        script: |
+          cd $CM_BUILD_DIR
+          mkdir -p build/ipa
+          cp -r build/RotationExperiment.xcarchive/Products/Applications/RotationExperiment.app build/ipa/ 2>/dev/null || true
+          cd build/ipa
+          zip -r RotationExperiment.ipa RotationExperiment.app
+          ls -la
+
     artifacts:
-      - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
+      - build/ipa/*.ipa
+      - build/*.xcarchive
