@@ -3,7 +3,7 @@
 //  RotationExperiment
 //
 //  Builds and manages all on-screen UI overlay elements programmatically.
-//  No Storyboard or XIB files are used — everything is pure code,
+//  No Storyboard or XIB files are used â€” everything is pure code,
 //  which is safer for a single-screen utility app targeting iOS 12.
 //
 //  DESIGN PHILOSOPHY:
@@ -12,7 +12,7 @@
 //  - Segmented control for one-tap pattern switching while recording
 //  - Timer in monospaced font so the display doesn't shift as digits change
 //
-//  SCREEN SIZE TARGET: iPhone 5s = 320 × 568 points (4-inch Retina display)
+//  SCREEN SIZE TARGET: iPhone 5s = 320 Ã— 568 points (4-inch Retina display)
 //
 
 import UIKit
@@ -20,6 +20,17 @@ import UIKit
 // MARK: - UIOverlayManager
 
 class UIOverlayManager {
+
+    // MARK: - Font Helper
+
+    /// Returns a monospaced font compatible with iOS 12+.
+    /// UIFont.monospacedSystemFont is iOS 13+ only â€” we fall back to Courier New on iOS 12.
+    private func monoFont(size: CGFloat) -> UIFont {
+        if #available(iOS 13.0, *) {
+            return UIFont.monospacedSystemFont(ofSize: size, weight: .regular)
+        }
+        return UIFont(name: "CourierNewPSMT", size: size) ?? UIFont.systemFont(ofSize: size)
+    }
 
     // MARK: - Exposed Controls
 
@@ -98,7 +109,7 @@ class UIOverlayManager {
     private func setupTitleLabel(in view: UIView) {
         titleLabel.text = "ROTATION EXPERIMENT"
         titleLabel.textColor = .white
-        titleLabel.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .medium)
+        titleLabel.font = monoFont(size: 12)
         titleLabel.textAlignment = .center
         titleLabel.alpha = 0.6
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -112,8 +123,8 @@ class UIOverlayManager {
     private func setupTimerLabel(in view: UIView) {
         timerLabel.text = "00:00"
         timerLabel.textColor = .white
-        // Monospaced so "1" and "8" occupy the same width — prevents layout jitter
-        timerLabel.font = UIFont.monospacedSystemFont(ofSize: 72, weight: .thin)
+        // Monospaced so "1" and "8" occupy the same width â€” prevents layout jitter
+        timerLabel.font = monoFont(size: 72)
         timerLabel.textAlignment = .center
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(timerLabel)
@@ -139,9 +150,9 @@ class UIOverlayManager {
     }
 
     private func setupStorageLabel(in view: UIView) {
-        storageLabel.text = "Storage: —"
+        storageLabel.text = "Storage: â€”"
         storageLabel.textColor = UIColor(white: 0.7, alpha: 1.0)
-        storageLabel.font = UIFont.monospacedSystemFont(ofSize: 11, weight: .regular)
+        storageLabel.font = monoFont(size: 11)
         storageLabel.textAlignment = .center
         storageLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(storageLabel)
@@ -154,7 +165,7 @@ class UIOverlayManager {
     private func setupPatternTitleLabel(in view: UIView) {
         patternTitleLabel.text = "VIBRATION PATTERN"
         patternTitleLabel.textColor = UIColor(white: 0.6, alpha: 1.0)
-        patternTitleLabel.font = UIFont.monospacedSystemFont(ofSize: 10, weight: .medium)
+        patternTitleLabel.font = monoFont(size: 10)
         patternTitleLabel.textAlignment = .center
         patternTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(patternTitleLabel)
@@ -168,7 +179,7 @@ class UIOverlayManager {
         patternSegment.selectedSegmentIndex = 0
         patternSegment.tintColor = .white
 
-        // iOS 13+ uses a different API — handle both to support iOS 12+
+        // iOS 13+ uses a different API â€” handle both to support iOS 12+
         if #available(iOS 13.0, *) {
             patternSegment.selectedSegmentTintColor = .white
             patternSegment.setTitleTextAttributes(
