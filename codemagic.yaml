@@ -4,18 +4,18 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
-      xcode: 14.3.1
+      xcode: latest
     scripts:
-      - name: Print Xcode version
+      - name: Xcode version
         script: xcodebuild -version
 
-      - name: Show project info
+      - name: Show project schemes
         script: |
           cd $CM_BUILD_DIR
           ls -la
           xcodebuild -list -project RotationExperiment.xcodeproj
 
-      - name: Build IPA (no signing)
+      - name: Build (no code signing)
         script: |
           cd $CM_BUILD_DIR
           xcodebuild clean archive \
@@ -28,14 +28,15 @@ workflows:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO
 
-      - name: Export IPA
+      - name: Package IPA
         script: |
           cd $CM_BUILD_DIR
           mkdir -p build/ipa
-          cp -r build/RotationExperiment.xcarchive/Products/Applications/RotationExperiment.app build/ipa/ 2>/dev/null || true
+          cp -r build/RotationExperiment.xcarchive/Products/Applications/RotationExperiment.app build/ipa/
           cd build/ipa
           zip -r RotationExperiment.ipa RotationExperiment.app
-          ls -la
+          echo "IPA size:"
+          ls -lh RotationExperiment.ipa
 
     artifacts:
       - build/ipa/*.ipa
